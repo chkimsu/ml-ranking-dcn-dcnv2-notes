@@ -31,6 +31,15 @@ When training DCN/DCNv2 for ranking tasks, consider these common strategies:
 
 - **Loss function choice:** Pairwise or listwise losses often provide better ranking performance than simple pointwise losses. Listwise loss like NDCG can align training with evaluation metrics.
 
-- **Training efficiency:** For large‑scale data, mini‑batch training with asynchronous data loading and optimized embeddings can improve throughput. Use learning‑rate schedules, gradient clipping, and dropout to stabilize training.
+- **Training efficiency:** For large-scale data, mini-batch training with asynchronous data loading and optimized embeddings can improve throughput. Use learning-rate schedules, gradient clipping, and dropout to stabilize training.
 
 - **Online/offline evaluation:** Evaluate ranking metrics (NDCG, MAP) on validation data. In production, A/B test different architectures and hyperparameters to ensure gains transfer to real users.
+
+## Sample Code and Data
+
+- `data/sample_ranking_data.csv` contains a tiny synthetic ranking dataset with continuous labels.
+- `data/sample_esmm_data.csv` provides toy features plus click/conversion labels for multi-task ESMM experiments.
+- `src/dcnv2_example.py` loads the ranking sample data and trains a DCNv2 model with full-matrix cross layers. Run `python src/dcnv2_example.py` to see a self-contained example.
+- `src/esmm_example.py` implements the ESMM paper’s shared-bottom CTR/CTCVR setup. Execute `python src/esmm_example.py` to train on the synthetic click/conversion data.
+- Prefer PyTorch? Use `src/dcnv2_torch_example.py` and `src/esmm_torch_example.py`, which mirror the TensorFlow demos with native Torch modules.
+- `notebooks/dcnv2_sample.ipynb` mirrors the DCNv2 script inside a Jupyter workflow so you can tweak the architecture or inspect intermediate tensors interactively.
